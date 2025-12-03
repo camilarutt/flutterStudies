@@ -52,12 +52,96 @@
 
 ### Instance variables
 
-- example? y; -> Initially null
-- example z = 1 -> Initially 0
+- `example? y;` -> Initially null
+- `example z = 1` -> Initially 0
 - All instance variables generate an implicit `getter method`
 - Non-final instance variables and `late final` instance variables without initializers also generate an implicit `setter method`
-  - for `getter method` you can use syntax `get` such as in example you get an instance variable -`exampleOne get instanceVarOne => propertyOne + propertyTwo;`
-  - for `setter method`, access the object variable and define a new value using `.` and `=` operator.
+  - For `getter method` you can use syntax `get` such as in example you get an instance variable -`exampleOne get instanceVarOne => propertyOne + propertyTwo;`
+  - For `setter method`, access the object variable and define a new value using `.` and `=` operator.
+- Using `this.` can access this in a late initializer, but not on a non-late initializer
+- Using `final` keyword, the non-final instance variable must be set exactly once
+- Be careful using `late final` since without an initializer adds a setter to the API
+- Private fields can't be used as named initializing formals.
+  -All variables introduced from initializing formal parameters are both final and only in scope of the initialized variables.
+- To perform logic that you can't express in the initializer list, create a factory constructor or static method with that logic. You can then pass the computed values to a normal constructor.
+
+#### Use an initializer list
+
+- Before the constructor body runs, you can initialize instance variables. Separate initializers with commas.
+
+### Implicit interfaces
+
+- Every class implicitly defines an interface containing all the instance members of the class and of any interfaces it implements
+- Ex: if you want to create a class A that supports class B's API without inheriting B's implementation, class A should implement the B interface
+
+### Class variables and methods
+
+#### Static Keyword
+
+- Use `static` keyword to implement class-wide variables and methods (not only class variables)
+- Static variables are useful for class-wide state and constants, such as:
+  - `static const exampleOne = "example";`
+- Static variables aren't initialized until they're declared (not called per se, such as late keyword)
+  - Static keyword belongs to the class itself, rather than to any specific instance of the class
+    - That means that there is only one copy of a `static` variable, shared by all instances of the class -`static` members can be accessed directly using the class name (ex: ClassName.staticVariable), without needing an instance of the class
+- It can be mutable or immutable
+
+#### Static Methods
+
+- Doesn't operate on an instance, meaning that don't have access to `this`.
+- They access static variables
+- Consider using top-level functions, instead of static methods, for common or widely used utilites and functionality
+
+### Redirecting constructors
+
+- A constructor might redirect to another constructor in the same class
+- The syntax is: `ExampleClass.alongXAxis(variable X) : this(X, 0);`
+
+### Factory Constructors
+
+- Usage examples of a `factory` keyword:
+  - The constructor doesn't always create a new instance of its class
+  - As checking arguments or doing any other processing that can't be handled in the initializer list
+- It can't access this
+- It can't return `null`
+- It might return:
+  - Existing instance from a cache instead of creating a new one
+  - A new instance of a subtype
+
+#### Redirecting factory constructors
+
+- It specifies a call to a constructor of another class to use whenever someone calls to the redirecting constructor
+  - Ex: `factory Listenable.merge(List<Listenable> listenables) = _MergingListenable`
+- The advantages of redirecting factory constructors are:
+  - An abstract class might provide a constant constructor that uses the constant constructor of another class
+  - A redirecting factory constructor avoids the need for forwardes to repeat the formal parameters and their default values
+
+### Constructor tear-offs
+
+- A tear-off takes out the need to use the parentheses, serving as a closure that invokes the constructor with the same parameters
+- If the tear-off is a constructor with the same signature and return type as the method accepts, you can use the tear-off as a parameter or variable
+- Tear-off differ from lambdas or anonymous functios, since a tear-off is the constructor
+- Ex: `var strings = charCodes.map(String.fromCharCode);`
+
+#### Late Keyword
+
+- Using `late` keyword meand that it's initialization is deffered until the first time the variable is accessed (lazy initialization)
+- It can be mutable if doens't go with `final` keyword
+
+### Constructor inheritance
+
+- `Subclasses`, or child classes, don't inherit constructors from their superclass, or immediate parent class. If a class doesn't declare a constructor, it can only use the default contructor.
+- A class can inherit the `parameters` of a superclass, these are classed `super parameters`
+
+#### Non-default superclass constructors
+
+- Dart executes constructors in the following order:
+  - initializer list
+  - superclass's unnamed, no-arg constructor
+  - main class's no-arg constructor
+- If the superclass lacks an unnamed, no-argument constructor, `call one of the constructors in the superclass`. Before the constructor body (if any), specify the `superclass constructor` after a colon `(:)`.
+
+#### Super parameters
 
 ## Type safety
 
