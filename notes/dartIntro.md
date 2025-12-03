@@ -12,6 +12,14 @@
 - It has a mixin-based inheritance, meaning that althought every classe, except for the otp class, has exactly one superclass, a class body can be reused in multiple class hierachies.
 - Extension methods are a way to add functionality to a class without changing the class or creating a subclass
 - Class modifier allow to control how libraries can subtype a class
+- When you define a class, you should consider overriding `toString`to return a string describind an instance of that class.
+- You might aldo need to define `hashCode` and `operator ==`
+  - `hashCode` -> int
+  - `runtimeType` -> Type
+- Methods
+  - `noSuchMethod(Invocation)` -> dynamic
+    -Invoked when a nonexistent method or property is accessed
+  - `toString()` -> String
 
 ### Using class members
 
@@ -26,7 +34,7 @@
 - You can create an object using a constructor
 - Constructor names can be either Classanem or ClassName.identifier
   ex: `Point(), Point.fromJson(), new Point()`
-- Constanct constructors
+- Constanct constructors (const)
   - Create a compile-time constant using `const` keyword before the constructor name
   - With a constant context, you can omit the const before a constructor or literal, establishing the constant context.
 - If you try to invoke a contructor with one constant object, and a non-constant (declared outside of a constant context), it creates in total a non-constant opject.
@@ -35,6 +43,21 @@
 
 - To get an object's type at runtime, you can use `Object` property `runtimeType`, which returns a Type object.
 - It is preferable to use a type test operator rather than runtimeType, beecause it returns as `object is Type` other than `object.runtimeType == Type`
+
+### Type test operator
+
+    - `as` -> Typecast
+    - `is` -> True if object has specified type
+    - `is!` -> Contrary of is
+
+### Instance variables
+
+- example? y; -> Initially null
+- example z = 1 -> Initially 0
+- All instance variables generate an implicit `getter method`
+- Non-final instance variables and `late final` instance variables without initializers also generate an implicit `setter method`
+  - for `getter method` you can use syntax `get` such as in example you get an instance variable -`exampleOne get instanceVarOne => propertyOne + propertyTwo;`
+  - for `setter method`, access the object variable and define a new value using `.` and `=` operator.
 
 ## Type safety
 
