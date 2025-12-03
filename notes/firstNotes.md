@@ -17,8 +17,15 @@
 
 ### Stateless widgets
 
-- The state can't be changed during runtime of the app
+- The state can't be changed during runtime of the app (example using @override on build method)
 
 ### Stateful Widgets
 
-- Mutable state that can be redrawn on the screen multiple times
+- Mutable state that can be redrawn on the screen multiple times (example using @override on createState method)
+
+## Requirements
+
+- iOS: Latest Xcode & iOS Simulator (on a Mac)
+- Android: Android Studio (Windows) / SDK / EMULATOR (ADV)
+- Android Studio Plugin (Flutter Plugin)
+- VSCode Extensions (Flutter extension)
